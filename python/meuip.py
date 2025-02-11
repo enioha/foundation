@@ -1,6 +1,6 @@
 import requests
 
-def get_public_ip():
+def get_publi_ip():
     try:
         response = requests.get("https://api64.ipify.org?format=text", timeout=5)
         response.raise_for_status()
