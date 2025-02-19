@@ -41,10 +41,14 @@ jobs:
       - name: Get changed Python files
         id: files
         run: |
+          # Fetch the latest commit information to make sure the refs are available
+          git fetch --prune --unshallow
+    
           # Get the list of modified .py files
           files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '\.py$')
           echo "Changed files: $files"
           echo "::set-output name=files::$files"
+
 
 
       - name: Run Flake8 on changed files
