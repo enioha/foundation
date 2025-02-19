@@ -50,7 +50,7 @@ jobs:
           # Get the list of modified .py files
           files=$(git diff --name-only $PREV_COMMIT HEAD | grep '\.py$' || true)
           echo "Changed files: $files"
-          echo "::set-output name=files::$files"
+          echo "files=$files" >> "$GITHUB_OUTPUT"
         shell: bash
         
       - name: Run Flake8 on changed files
