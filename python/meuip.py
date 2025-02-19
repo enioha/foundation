@@ -2,7 +2,7 @@ import requests
 
 def get_publi_ip():
     try:
-        response = requests.get("https://api64.ipify.org?format=text", timeout=3)
+        response = requests.get("https://api64.ipify.org?format=text", timeout=4)
         response.raise_for_status()
         return response.text
     except requests.RequestException as e:
