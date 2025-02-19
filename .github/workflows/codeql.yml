@@ -27,6 +27,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          # Obtém todo o histórico do repositório
+          fetch-depth: 0  
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -41,16 +44,15 @@ jobs:
       - name: Get changed Python files
         id: files
         run: |
-          # Fetch the latest commit information to make sure the refs are available
-          git fetch --prune --unshallow
+          # Obtém o commit anterior para comparação
+          PREV_COMMIT=$(git rev-parse HEAD~1)
     
           # Get the list of modified .py files
-          files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '\.py$')
+          files=$(git diff --name-only $PREV_COMMIT HEAD | grep '\.py$' || true)
           echo "Changed files: $files"
           echo "::set-output name=files::$files"
-
-
-
+        shell: bash
+        
       - name: Run Flake8 on changed files
         run: |
           if [[ -n "${{ steps.files.outputs.files }}" ]]; then
