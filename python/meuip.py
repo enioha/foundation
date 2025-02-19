@@ -1,13 +1,16 @@
 import requests
 
+
 def get_public_ip():
     try:
-        response = requests.get("https://api64.ipify.org?format=text", timeout=10)
+        response = requests.get(
+            "https://api64.ipify.org?format=text", timeout=10)
         response.raise_for_status()
         return response.text
     except requests.RequestException as e:
         print(f"Erro ao obter IP público: {e}")
         return None
+
 
 if __name__ == "__main__":
     ip = get_public_ip()
